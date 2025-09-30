@@ -1,0 +1,367 @@
+<AssetData xmlns="http://namespaces.softwareag.com/webMethods/MFT_NS" version="10.15.0.0.429"
+           timetamp="2025-09-30T07:33:14">
+    <assetType xmlns="" name="userTemplate">
+        <asset>
+            <data>
+                <userTemplate>
+                    <name>Default Template</name>
+                    <id>000000000000000000000000</id>
+                    <defaultTemplate>true</defaultTemplate>
+                    <description>Created by System</description>
+                </userTemplate>
+            </data>
+        </asset>
+    </assetType>
+    <assetType xmlns="" name="VFS">
+        <asset>
+            <data>
+                <virtualFileObject>
+                    <connectionPoolSize>0</connectionPoolSize>
+                    <customProxy>false</customProxy>
+                    <defaultCloudAsset>false</defaultCloudAsset>
+                    <enableVFSDecrypt>false</enableVFSDecrypt>
+                    <enableVFSEncrypt>false</enableVFSEncrypt>
+                    <encrypted>false</encrypted>
+                    <enterprise>false</enterprise>
+                    <forceCWD>false</forceCWD>
+                    <HADownload>false</HADownload>
+                    <HAUpload>false</HAUpload>
+                    <parent>false</parent>
+                    <partnerID>56sism00hgsnvo2b0000000u</partnerID>
+                    <partnerName>Enterprise</partnerName>
+                    <passEncrypted>true</passEncrypted>
+                    <passive>true</passive>
+                    <password/>
+                    <privPGPKeyLoc/>
+                    <privPGPKeyPswd/>
+                    <proxyAlias/>
+                    <proxyEnabled>true</proxyEnabled>
+                    <publicPGPKeyLoc/>
+                    <TNPartner>false</TNPartner>
+                    <twoFactorAuth>false</twoFactorAuth>
+                    <user/>
+                    <VFSName>Outbound</VFSName>
+                    <VFSType>VIRTUAL</VFSType>
+                    <VFSURL>FILE:///data/sag/CS/CS_AT_SPV/Outbound/</VFSURL>
+                    <VFSVirtual>false</VFSVirtual>
+                    <vfsId>56sism00i2bdchj1000003mv</vfsId>
+                    <virtualParentID>56sism00i0ldvohg000003t6</virtualParentID>
+                    <virtualParentPath>/CS/CS_AT_SPV</virtualParentPath>
+                </virtualFileObject>
+            </data>
+            <depends>
+                <partnerMapping id="56sism00hgsnvo2b0000000u" name="Enterprise"/>
+            </depends>
+        </asset>
+        <asset>
+            <data>
+                <virtualFileObject>
+                    <connectionPoolSize>0</connectionPoolSize>
+                    <customProxy>false</customProxy>
+                    <defaultCloudAsset>false</defaultCloudAsset>
+                    <enableVFSDecrypt>false</enableVFSDecrypt>
+                    <enableVFSEncrypt>false</enableVFSEncrypt>
+                    <encrypted>false</encrypted>
+                    <enterprise>false</enterprise>
+                    <forceCWD>false</forceCWD>
+                    <HADownload>false</HADownload>
+                    <HAUpload>false</HAUpload>
+                    <parent>false</parent>
+                    <partnerID>56sism00hgsnvo2b0000000u</partnerID>
+                    <partnerName>Enterprise</partnerName>
+                    <passEncrypted>true</passEncrypted>
+                    <passive>true</passive>
+                    <password/>
+                    <privPGPKeyLoc/>
+                    <privPGPKeyPswd/>
+                    <proxyAlias/>
+                    <proxyEnabled>true</proxyEnabled>
+                    <publicPGPKeyLoc/>
+                    <TNPartner>false</TNPartner>
+                    <twoFactorAuth>false</twoFactorAuth>
+                    <user/>
+                    <VFSName>Final</VFSName>
+                    <VFSType>VIRTUAL</VFSType>
+                    <VFSURL>FILE:///data/sag/CS/CS_AT_SPV/Final/</VFSURL>
+                    <VFSVirtual>false</VFSVirtual>
+                    <vfsId>56sism00i2bdchjs000003n1</vfsId>
+                    <virtualParentID>56sism00i0ldvohg000003t6</virtualParentID>
+                    <virtualParentPath>/CS/CS_AT_SPV</virtualParentPath>
+                </virtualFileObject>
+            </data>
+            <depends>
+                <partnerMapping id="56sism00hgsnvo2b0000000u" name="Enterprise"/>
+            </depends>
+        </asset>
+    </assetType>
+    <assetType xmlns="" name="partnerMapping">
+        <asset>
+            <data>
+                <partnerMapping>
+                    <enterprise>false</enterprise>
+                    <partnerId>56sism00hgsnvo2b0000000u</partnerId>
+                    <partnerName>Enterprise</partnerName>
+                    <partnerOrgUnit></partnerOrgUnit>
+                    <TNPartner>false</TNPartner>
+                </partnerMapping>
+            </data>
+        </asset>
+    </assetType>
+    <assetType xmlns="" name="postProcessEvent">
+        <asset>
+            <data>
+                <postProcessEvent>
+                    <action>Uploads</action>
+                    <active>true</active>
+                    <advancedEventData>
+                        <actionNameWhereParallelProcessingStarts/>
+                        <maxNumberOfParallelProcessing>0</maxNumberOfParallelProcessing>
+                        <processFilesInParallel>false</processFilesInParallel>
+                    </advancedEventData>
+                    <anyUser>false</anyUser>
+                    <description>The Event is for decrypting the file and move it to required path</description>
+                    <eventUser>
+                        <userId>CSAT_5_SPV</userId>
+                        <userType>U</userType>
+                    </eventUser>
+                    <eventUser>
+                        <userId>testdevuser</userId>
+                        <userType>U</userType>
+                    </eventUser>
+                    <executeMode>immediate</executeMode>
+                    <fileTransfer>Successful</fileTransfer>
+                    <folderName>/CS/CS_AT_SPV/Outbound/</folderName>
+                    <id>56sism00i2bdfsmo000003n7</id>
+                    <name>CS5_SPV_DECRYPTION</name>
+                    <properties>
+                        <entry>
+                            <key xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">
+                                maxNumberOfParallelProcessing
+                            </key>
+                            <value xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">0
+                            </value>
+                        </entry>
+                        <entry>
+                            <key xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">
+                                actionNameWhereParallelProcessingStarts
+                            </key>
+                            <value xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string"/>
+                        </entry>
+                        <entry>
+                            <key xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">folder
+                            </key>
+                            <value xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">
+                                /CS/CS_AT_SPV/Outbound/
+                            </value>
+                        </entry>
+                        <entry>
+                            <key xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">
+                                processFilesInParallel
+                            </key>
+                            <value xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">false
+                            </value>
+                        </entry>
+                        <entry>
+                            <key xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">
+                                transferstatus
+                            </key>
+                            <value xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">Successful
+                            </value>
+                        </entry>
+                        <entry>
+                            <key xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">execmode
+                            </key>
+                            <value xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">immediate
+                            </value>
+                        </entry>
+                        <entry>
+                            <key xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">action
+                            </key>
+                            <value xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">Uploads
+                            </value>
+                        </entry>
+                        <entry>
+                            <key xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">
+                                isSpecificFolder
+                            </key>
+                            <value xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">true
+                            </value>
+                        </entry>
+                    </properties>
+                    <decryptFile>
+                        <actionId>3361090109479757</actionId>
+                        <classVersionID>4</classVersionID>
+                        <disabled>false</disabled>
+                        <errorTask>false</errorTask>
+                        <executeErrorTask>true</executeErrorTask>
+                        <multiThreaded>false</multiThreaded>
+                        <sourceFilter>*.pgp</sourceFilter>
+                        <taskName>Decrypt the encrypting file</taskName>
+                        <asciiArmour>false</asciiArmour>
+                        <certificateId>56sism00htgnn61i0000042o</certificateId>
+                        <deleteOriginal>true</deleteOriginal>
+                        <deriveFileNameFromInput>false</deriveFileNameFromInput>
+                        <keyFile/>
+                        <password/>
+                        <verifySingature>false</verifySingature>
+                    </decryptFile>
+                    <moveFileTask>
+                        <actionId>2791923491311999</actionId>
+                        <classVersionID>4</classVersionID>
+                        <disabled>false</disabled>
+                        <errorTask>false</errorTask>
+                        <executeErrorTask>true</executeErrorTask>
+                        <multiThreaded>false</multiThreaded>
+                        <s3AccessKey>n1XGUQ0tUjw=</s3AccessKey>
+                        <s3AccessKeyId/>
+                        <s3BucketName/>
+                        <s3RegionName/>
+                        <sourceFilter>*IF_08072_*.xml</sourceFilter>
+                        <taskName>Move the file to the final</taskName>
+                        <ascii>false</ascii>
+                        <asciiConvert>none</asciiConvert>
+                        <createDirectory>false</createDirectory>
+                        <destinationUrl>/CS/CS_AT_SPV/Final/</destinationUrl>
+                        <failActionIfFileExists>false</failActionIfFileExists>
+                        <giveUpAfter>0</giveUpAfter>
+                        <moveRetryInterval>1</moveRetryInterval>
+                        <moveUnique>false</moveUnique>
+                        <overridePartner>false</overridePartner>
+                        <partnerId/>
+                        <password/>
+                        <preserveFileDate>true</preserveFileDate>
+                        <proxyAlias/>
+                        <remoteDestination>false</remoteDestination>
+                        <renameFilesTo/>
+                        <retryFail>0</retryFail>
+                        <retryFailTimes>0</retryFailTimes>
+                        <retryFromPointOfInterruption>0</retryFromPointOfInterruption>
+                        <retryWhenInterrupted>0</retryWhenInterrupted>
+                        <simple>false</simple>
+                        <siteCommandBeforeUpload/>
+                        <skipTransferIfFileExists>false</skipTransferIfFileExists>
+                        <temporaryFileName/>
+                        <useCustomProxyEnabled>false</useCustomProxyEnabled>
+                        <useProxyEnabled>true</useProxyEnabled>
+                        <username/>
+                        <vfsReference>true</vfsReference>
+                        <wait>0</wait>
+                    </moveFileTask>
+                    <emailTask>
+                        <actionId>1545081076530229</actionId>
+                        <classVersionID>4</classVersionID>
+                        <disabled>false</disabled>
+                        <errorTask>true</errorTask>
+                        <executeErrorTask>false</executeErrorTask>
+                        <multiThreaded>false</multiThreaded>
+                        <taskName>Send email</taskName>
+                        <emailBCC>suraj.verma1@boots.co.uk</emailBCC>
+                        <emailBody>Error occurred while processing file.
+
+                            Filename: %name%
+
+                            File path: %url%
+
+                            Error: %task_error%
+
+                            All Errors(for other files): %task_errors%
+
+                            For reference:
+                            * AT Transaction-ID: %event_execution_id%
+                            * AT Task Name: %task_error_names%
+                            * AT Task: %task_error_types%
+
+                            Additional technical information:
+                            ********************************
+
+                            %error_trace%
+                            Email created at: %yyyy%-%MMM%-%dd% %hh%:%mm%:%ss% %Z%
+                        </emailBody>
+                        <emailCC/>
+                        <emailFrom>suraj.verma1@boots.co.uk</emailFrom>
+                        <emailSubject/>
+                        <emailTo/>
+                    </emailTask>
+                    <transferStatus>Successful</transferStatus>
+                </postProcessEvent>
+            </data>
+            <depends>
+                <user id="U/CSAT_5_SPV" name="CSAT_5_SPV"/>
+                <user id="U/testdevuser" name="testdevuser"/>
+                <VFS id="56sism00i2bdchj1000003mv" name="/CS/CS_AT_SPV/Outbound"/>
+                <certificate id="56sism00htgnn61i0000042o" name="P_Tiger_private.key"/>
+                <VFS id="56sism00i2bdchjs000003n1" name="/CS/CS_AT_SPV/Final"/>
+            </depends>
+        </asset>
+    </assetType>
+    <assetType xmlns="" name="certificate">
+        <asset>
+            <data>
+                <certificate>
+                    <id>56sism00htgnn61i0000042o</id>
+                    <alias>P_Tiger_private.key</alias>
+                    <description>P_Tiger_Decryption key</description>
+                    <type>PGP_Private</type>
+                    <encodedContent></encodedContent>
+                    <encodedPassword>yX6DCGU0QeVwichkZAPqNA==</encodedPassword>
+                    <encodedKeyStorePassword></encodedKeyStorePassword>
+                    <expiaryDate>0</expiaryDate>
+                    <location>File</location>
+                    <metadata></metadata>
+                    <enabled>true</enabled>
+                    <path>/home/sag/pgp/DHL/private.key</path>
+                </certificate>
+            </data>
+        </asset>
+    </assetType>
+    <assetType xmlns="" name="user">
+        <asset>
+            <data>
+                <user>
+                    <authenticationId>CSAT_5_SPV</authenticationId>
+                    <id>CSAT_5_SPV</id>
+                    <userType>U</userType>
+                    <templateId>000000000000000000000000</templateId>
+                    <loginDisabled>false</loginDisabled>
+                    <TNPartner>false</TNPartner>
+                    <enterprise>false</enterprise>
+                </user>
+            </data>
+            <depends>
+                <userTemplate id="000000000000000000000000" name="Default Template"/>
+            </depends>
+        </asset>
+        <asset>
+            <data>
+                <user>
+                    <authenticationId>testdevuser</authenticationId>
+                    <id>testdevuser</id>
+                    <userType>U</userType>
+                    <templateId>000000000000000000000000</templateId>
+                    <loginDisabled>false</loginDisabled>
+                    <TNPartner>false</TNPartner>
+                    <enterprise>false</enterprise>
+                </user>
+            </data>
+            <depends>
+                <userTemplate id="000000000000000000000000" name="Default Template"/>
+            </depends>
+        </asset>
+    </assetType>
+</AssetData>

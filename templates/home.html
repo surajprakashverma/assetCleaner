@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Asset Cleaner</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('/static/Designer.png') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #E0E0E0;
+    }
+
+    .title {
+      font-size: 36px;
+      font-weight: bold;
+      color: #FFFFFF;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 30px;
+      border-radius: 12px;
+      width: 350px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+    }
+
+    .container p {
+      color: #FF4C4C;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    input[type="file"],
+    select,
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: none;
+      font-size: 16px;
+      color: #FFFFFF;
+    }
+
+    input[type="file"] {
+      background-color: #333;
+      cursor: pointer;
+    }
+
+    select {
+      background-color: #222;
+    }
+
+    input[type="submit"] {
+      background-color: #FF4C4C;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #e60000;
+    }
+  </style>
+</head>
+<body>
+  <div class="title">Asset Cleaner</div>
+  <div class="container">
+    <p>Upload Your Asset</p>
+    <form method="POST" enctype="multipart/form-data">
+      <input type="file" name="file" accept=".xml">
+      <select name="assettype">
+        <option value="event">Event</option>
+        <option value="vfs">VFS</option>
+      </select>
+      <input type="submit" value="Upload">
+    </form>
+  </div>
+</body>
+</html>
