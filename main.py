@@ -23,7 +23,7 @@ def upload_file():
                     root_element=vfsCleanUp(BytesIO(xml_bytes))
                 tree = ET.ElementTree(root_element)
                 output = BytesIO()
-                tree.write(output, encoding='utf-8', xml_declaration=True)
+                tree.write(output, encoding='utf-8')
                 output.seek(0)
                 return send_file(
                     output,
