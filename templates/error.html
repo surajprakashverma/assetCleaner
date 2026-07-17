@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Error - Asset Cleanup Utility</title>
+
+https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+html,body{
+    width:100%;
+    height:100vh;
+}
+
+body{
+    background:url("{{ url_for('static', filename='Designer.png') }}")
+    no-repeat center center fixed;
+    background-size:cover;
+    color:white;
+}
+
+.overlay{
+    width:100%;
+    height:100vh;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(0,0,0,.75),
+        rgba(35,0,0,.65)
+    );
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:20px;
+}
+
+.error-card{
+
+    width:100%;
+    max-width:900px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:25px;
+
+    padding:40px;
+
+    text-align:center;
+
+    animation:fadeIn .7s ease;
+}
+
+.error-icon{
+    font-size:70px;
+    color:#ff5252;
+
+    margin-bottom:20px;
+
+    animation:pulse 2s infinite;
+}
+
+.error-title{
+    font-size:38px;
+    margin-bottom:10px;
+
+    color:#ff7070;
+}
+
+.error-message{
+
+    font-size:18px;
+
+    line-height:1.6;
+
+    color:#e5e7eb;
+
+    margin-bottom:25px;
+}
+
+.suggestions{
+
+    text-align:left;
+
+    background:rgba(255,255,255,.05);
+
+    border-radius:15px;
+
+    padding:20px;
+
+    margin-bottom:25px;
+}
+
+.suggestions h3{
+    margin-bottom:12px;
+    color:#00ffff;
+}
+
+.suggestions ul{
+    padding-left:25px;
+}
+
+.suggestions li{
+    margin-bottom:10px;
+}
+
+.home-btn{
+
+    display:inline-block;
+
+    padding:14px 30px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ff4b2b,
+        #ff416c
+    );
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:14px;
+
+    font-weight:bold;
+
+    transition:.3s;
+}
+
+.home-btn:hover{
+    transform:translateY(-2px);
+
+    box-shadow:0 0 20px rgba(255,65,108,.5);
+}
+
+@keyframes pulse{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.08);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="overlay">
+
+    <div class="error-card">
+
+        <div class="error-icon">
+            <i class="fas fa-triangle-exclamation"></i>
+        </div>
+
+        <h1 class="error-title">
+            Oops! Something Went Wrong
+        </h1>
+
+        <p class="error-message">
+            {{ error_message }}
+        </p>
+
+        <div class="suggestions">
+
+            <h3>Possible Fixes</h3>
+
+            <ul>
+
+                <li>Ensure the uploaded file is a valid XML export.</li>
+
+                <li>Verify the XML structure matches Software AG MFT export format.</li>
+
+                <li>Check if the XML file is corrupted.</li>
+
+                <li>Ensure required tags exist in the file.</li>
+
+                <li>Verify VFS paths are entered correctly.</li>
+
+                <li>Try uploading the original export file again.</li>
+
+                <li>Contact the tool administrator if the issue persists.</li>
+
+            </ul>
+
+        </div>
+
+         <a href="{{ url_for('home') }}" class="back-home">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Event Cleanup</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+html,
+body{
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+}
+
+body{
+    background:url("{{ url_for('static', filename='Designer.png') }}")
+    no-repeat center center fixed;
+    background-size:cover;
+    color:white;
+}
+
+.main{
+    width:100%;
+    height:100vh;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(0,0,0,.68),
+        rgba(0,30,60,.55)
+    );
+
+    display:flex;
+    flex-direction:column;
+
+    padding:14px 4vw;
+
+    animation:pageFade .8s ease;
+}
+
+/* HEADER */
+
+.title{
+    text-align:center;
+    margin-bottom:8px;
+}
+
+.title i{
+    font-size:32px;
+    color:#00ffff;
+    margin-bottom:4px;
+
+    animation:floatIcon 3s ease-in-out infinite;
+
+    text-shadow:
+    0 0 12px rgba(0,255,255,.7);
+}
+
+.title h1{
+    font-size:34px;
+    margin-bottom:3px;
+
+    text-shadow:
+    0 0 12px rgba(0,255,255,.45);
+}
+
+.title p{
+    font-size:13px;
+    color:#d1d5db;
+}
+
+/* INFO BAR */
+
+.info-banner{
+    width:100%;
+
+    text-align:center;
+
+    background:
+    linear-gradient(
+        270deg,
+        #00c6ff,
+        #0072ff,
+        #00eaff,
+        #0072ff
+    );
+
+    background-size:300% 300%;
+
+    animation:gradientMove 5s ease infinite;
+
+    border-radius:18px;
+
+    padding:10px;
+
+    font-size:16px;
+    font-weight:700;
+
+    margin-bottom:10px;
+
+    box-shadow:
+    0 0 24px rgba(0,198,255,.35);
+}
+
+/* FORM */
+
+form{
+    width:100%;
+}
+
+input[type=file]{
+    width:100%;
+
+    padding:13px;
+
+    background:rgba(15,23,42,.95);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    border-radius:16px;
+
+    color:white;
+
+    font-size:15px;
+
+    margin-bottom:12px;
+
+    transition:.3s;
+}
+
+input[type=file]:hover{
+    border-color:#00ffff;
+
+    box-shadow:
+    0 0 20px rgba(0,255,255,.25);
+}
+
+input[type=file]::file-selector-button{
+    background:#00c6ff;
+
+    color:black;
+
+    border:none;
+
+    padding:10px 20px;
+
+    border-radius:11px;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+    margin-right:10px;
+
+    transition:.3s;
+}
+
+input[type=file]::file-selector-button:hover{
+    background:#00ffff;
+}
+
+button{
+    width:100%;
+
+    height:58px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:linear-gradient(
+        135deg,
+        #00c6ff,
+        #0072ff
+    );
+
+    color:white;
+
+    font-size:20px;
+    font-weight:800;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    position:relative;
+    overflow:hidden;
+}
+
+button::before{
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-100%;
+
+    width:100%;
+    height:100%;
+
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.35),
+        transparent
+    );
+
+    transition:.7s;
+}
+
+button:hover::before{
+    left:100%;
+}
+
+button:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 0 30px rgba(0,198,255,.55);
+}
+
+/* TIPS */
+
+.tips{
+    flex:1;
+
+    margin-top:14px;
+
+    background:
+    rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:20px;
+
+    padding:20px 24px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+
+    transition:.3s;
+
+    box-shadow:
+    inset 0 0 20px rgba(255,255,255,.03);
+}
+
+.tips:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 0 25px rgba(0,198,255,.18);
+}
+
+.tips h3{
+    color:#00ffff;
+
+    font-size:26px;
+
+    margin-bottom:16px;
+
+    text-shadow:
+    0 0 10px rgba(0,255,255,.45);
+}
+
+.tips ul{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:12px 40px;
+    padding-left:22px;
+}
+
+.tips li{
+    font-size:15px;
+    line-height:1.5;
+}
+
+/* FOOTER */
+
+.footer{
+    width:100%;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-top:12px;
+}
+
+.back{
+    color:white;
+    text-decoration:none;
+    font-size:18px;
+    transition:.3s;
+}
+
+.back:hover{
+    color:#00ffff;
+
+    text-shadow:
+    0 0 12px #00ffff;
+}
+
+.signature{
+    color:#d1d5db;
+    font-size:13px;
+}
+
+/* ANIMATIONS */
+
+@keyframes floatIcon{
+
+    0%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-8px);
+    }
+
+    100%{
+        transform:translateY(0);
+    }
+
+}
+
+@keyframes gradientMove{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    50%{
+        background-position:100% 50%;
+    }
+
+    100%{
+        background-position:0% 50%;
+    }
+
+}
+
+@keyframes pageFade{
+
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+/* SMALL HEIGHT SCREENS */
+
+@media(max-height:750px){
+
+    .main{
+        padding:10px 4vw;
+    }
+
+    .title i{
+        font-size:26px;
+    }
+
+    .title h1{
+        font-size:28px;
+    }
+
+    .title p{
+        font-size:12px;
+    }
+
+    .info-banner{
+        padding:8px;
+        font-size:14px;
+        margin-bottom:8px;
+    }
+
+    input[type=file]{
+        padding:10px;
+        margin-bottom:8px;
+    }
+
+    button{
+        height:48px;
+        font-size:17px;
+    }
+
+    .tips{
+        padding:15px 20px;
+        margin-top:10px;
+    }
+
+    .tips h3{
+        font-size:21px;
+        margin-bottom:10px;
+    }
+
+    .tips ul{
+        gap:8px 35px;
+    }
+
+    .tips li{
+        font-size:13px;
+    }
+
+    .footer{
+        margin-top:8px;
+    }
+
+    .back{
+        font-size:15px;
+    }
+
+    .signature{
+        font-size:11px;
+    }
+
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    html,
+    body{
+        overflow:auto;
+        height:auto;
+    }
+
+    .main{
+        height:auto;
+        min-height:100vh;
+    }
+
+    .tips{
+        flex:none;
+    }
+
+    .tips ul{
+        grid-template-columns:1fr;
+    }
+
+    .footer{
+        flex-direction:column;
+        gap:8px;
+        text-align:center;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="main">
+
+    <div class="title">
+        <i class="fas fa-calendar-check"></i>
+        <h1>Event Cleanup</h1>
+        <p>Upload your Event XML and generate a cleaned asset file.</p>
+    </div>
+
+    <div class="info-banner">
+        ⚡ Accelerate Software AG Event Asset Cleanup
+    </div>
+
+    <form method="POST" enctype="multipart/form-data">
+
+        <input type="hidden" name="assettype" value="event">
+
+        <input
+            type="file"
+            name="file"
+            accept=".xml"
+            required>
+
+        <button type="submit">
+            Clean Event XML
+        </button>
+
+    </form>
+
+    <div class="tips">
+
+    <h3>💡 Software AG Event Tips</h3>
+
+    <ul>
+        <li>Remove unused dependencies before migration.</li>
+        <li>Validate schedules before importing assets.</li>
+        <li>Compare cleaned XML with source export.</li>
+        <li>Deploy first to lower environments.</li>
+        <li>Keep Event assets under version control.</li>
+        <li>Review disabled schedules before cleanup.</li>
+        <li>Verify event references after importing.</li>
+        <li>Keep a backup of original exported assets.</li>
+        
+        <li>Verify trigger conditions after import.</li>
+        <li>Ensure event names follow naming standards.</li>
+        <li>Clean unused task dependencies.</li>
+        <li>Review manual and scheduled event execution.</li>
+        <li>Validate environment-specific configurations.</li>
+
+        <li>Check for duplicate event definitions.</li>
+        <li>Confirm required user permissions exist.</li>
+        <li>Review event logging settings.</li>
+        <li>Verify retry configurations.</li>
+        <li>Document cleanup changes before migration.</li>
+        <li>Validate imported assets using smoke tests.</li>
+        <li>Ensure event execution order is maintained.</li>
+        <li>Review event notifications and alerts.</li>
+        <li>Archive obsolete event definitions.</li>
+    </ul>
+
+</div>
+
+    <div class="footer">
+
+        <a href="{{ url_for('home') }}" class="back-home">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+        <div class="signature">
+            Built with ❤️ by Suraj Prakash Verma
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
