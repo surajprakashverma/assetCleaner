@@ -1,34 +1,34 @@
 def eventCleanUp(input_FileName):
-    import xml.etree.ElementTree as ET
-    NS = {'ns': 'http://namespaces.softwareag.com/webMethods/MFT_NS'}
-    XSI_NS = "http://www.w3.org/2001/XMLSchema-instance"
-    XS_NS = "http://www.w3.org/2001/XMLSchema"
+    from lxml import etree
+    import copy
 
-    tree = ET.parse(input_FileName)
+    input_file = input_FileName
+    output_file = "scheduleAction.xml"
+
+    parser = etree.XMLParser(remove_blank_text=True)
+    tree = etree.parse(input_file, parser)
+
     root = tree.getroot()
 
-    ET.register_namespace('', NS['ns'])
-    ET.register_namespace('xsi', XSI_NS)
-    ET.register_namespace('xs', XS_NS)
-    for assetType in list(root):
-        tag_no_ns = assetType.tag.split('}')[-1]  # Strip namespace
-        name_attr = assetType.get('name')
-        if tag_no_ns == 'assetType' and name_attr in ('userTemplate', 'user', 'VFS', 'partnerMapping'):
-            root.remove(assetType)
+    # Find scheduleAction
+    schedule_action = root.xpath(
+        './/*[local-name()="assetType" and @name="scheduleAction"]'
+    )[0]
 
-    def remove_all_elements(root, tag_name):
-        for parent in root.iter():
-            for child in list(parent):
-                if child.tag.split('}')[-1] == tag_name:
-                    parent.remove(child)
+    # Remove <depends> tags
+    for depends in schedule_action.xpath('.//*[local-name()="depends"]'):
+        depends.getparent().remove(depends)
 
-    for tag in ['users', 'user', 'userId', 'eventUser', 'userTemplate']:
-        remove_all_elements(root, tag)
+    # Create new root with original namespace + attributes
+    new_root = etree.Element(
+        root.tag,
+        nsmap=root.nsmap,
+        attrib=root.attrib
+    )
 
-    for elem in root.iter():
-        tag_no_ns = elem.tag.split('}')[-1]
-        if tag_no_ns in ('key', 'value'):
-            elem.set("xmlns:xs", XS_NS)
-            elem.set("xmlns:xsi", XSI_NS)
-            elem.set("{%s}type" % XSI_NS, "xs:string")
-    return root
+    # Copy scheduleAction preserving xmlns=""
+    new_root.append(copy.deepcopy(schedule_action))
+
+    # Write output
+    new_tree = etree.ElementTree(new_root)
+    return (new_tree)
