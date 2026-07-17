@@ -142,8 +142,6 @@ def process_uploaded_file(asset_type):
 
         tree.write(
             output,
-            encoding="utf-8",
-            xml_declaration=True,
             pretty_print=True
         )
 
