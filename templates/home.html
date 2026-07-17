@@ -1,91 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Asset Cleaner</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: url('/static/Designer.png') no-repeat center center fixed;
-      background-size: cover;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: #E0E0E0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Cleanup Utility</title>
 
-    .title {
-      font-size: 36px;
-      font-weight: bold;
-      color: #FFFFFF;
-      margin-bottom: 20px;
-      text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-    }
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    .container {
-      background-color: rgba(0, 0, 0, 0.75);
-      padding: 30px;
-      border-radius: 12px;
-      width: 350px;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-    }
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI',sans-serif;
+        }
 
-    .container p {
-      color: #FF4C4C;
-      font-size: 16px;
-      margin-bottom: 20px;
-    }
+        html,
+        body{
+            width:100%;
+            height:100%;
+        }
 
-    input[type="file"],
-    select,
-    input[type="submit"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 6px;
-      border: none;
-      font-size: 16px;
-      color: #FFFFFF;
-    }
+        body{
+            background:url("{{ url_for('static', filename='Designer.png') }}")
+                       no-repeat center center fixed;
+            background-size:cover;
+            color:#fff;
+        }
 
-    input[type="file"] {
-      background-color: #333;
-      cursor: pointer;
-    }
+        .overlay{
+            min-height:100vh;
+            background:linear-gradient(
+                135deg,
+                rgba(0,0,0,.72),
+                rgba(0,25,55,.60),
+                rgba(30,0,40,.55)
+            );
+            display:flex;
+            flex-direction:column;
+            justify-content:space-between;
+            padding:30px 5%;
+        }
 
-    select {
-      background-color: #222;
-    }
+        /* Hero */
 
-    input[type="submit"] {
-      background-color: #FF4C4C;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+        .hero{
+            text-align:center;
+            margin-bottom:30px;
+        }
 
-    input[type="submit"]:hover {
-      background-color: #e60000;
-    }
-  </style>
+        .hero h1{
+            font-size:52px;
+            font-weight:800;
+            text-shadow:
+                0 0 12px cyan,
+                0 0 25px rgba(0,255,255,.45);
+        }
+
+        .hero p{
+            margin-top:12px;
+            font-size:18px;
+            color:#dbeafe;
+            line-height:1.6;
+        }
+
+        /* Cards */
+
+        .cards{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:35px;
+            margin:40px 0;
+        }
+
+        .card{
+            text-decoration:none;
+            color:white;
+
+            background:rgba(255,255,255,.08);
+            backdrop-filter:blur(18px);
+
+            border:1px solid rgba(255,255,255,.18);
+
+            border-radius:25px;
+
+            padding:35px;
+
+            transition:.35s;
+
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+
+            min-height:260px;
+
+            position:relative;
+            overflow:hidden;
+        }
+
+        .card::before{
+            content:"";
+            position:absolute;
+            top:0;
+            left:-100%;
+            width:100%;
+            height:100%;
+            background:linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,.25),
+                transparent
+            );
+            transition:.7s;
+        }
+
+        .card:hover::before{
+            left:100%;
+        }
+
+        .card:hover{
+            transform:translateY(-8px);
+        }
+
+        .event:hover{
+            box-shadow:0 0 30px rgba(0,255,255,.55);
+        }
+
+        .vfs:hover{
+            box-shadow:0 0 30px rgba(255,70,70,.55);
+        }
+
+        .card i{
+            font-size:60px;
+            margin-bottom:20px;
+        }
+
+        .event i{
+            color:#00ffff;
+        }
+
+        .vfs i{
+            color:#ff4d4d;
+        }
+
+        .card h2{
+            font-size:32px;
+            margin-bottom:15px;
+        }
+
+        .card p{
+            color:#e2e8f0;
+            line-height:1.7;
+        }
+
+        /* About */
+
+        .about{
+            background:rgba(255,255,255,.08);
+            backdrop-filter:blur(15px);
+
+            border-radius:20px;
+
+            border:1px solid rgba(255,255,255,.15);
+
+            padding:25px;
+        }
+
+        .about h3{
+            color:#00ffff;
+            margin-bottom:12px;
+            font-size:24px;
+        }
+
+        .about p{
+            line-height:1.7;
+            color:#f1f5f9;
+        }
+
+        .highlight{
+            color:#00ffff;
+            font-weight:bold;
+        }
+
+        .footer{
+            text-align:center;
+            margin-top:25px;
+            color:#d1d5db;
+            font-size:14px;
+        }
+
+        @media(max-width:900px){
+
+            .cards{
+                grid-template-columns:1fr;
+            }
+
+            .hero h1{
+                font-size:38px;
+            }
+
+            .card{
+                min-height:220px;
+            }
+
+            .card h2{
+                font-size:28px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <div class="title">Asset Cleaner</div>
-  <div class="container">
-    <p>Upload Your Asset</p>
-    <form method="POST" enctype="multipart/form-data">
-      <input type="file" name="file" accept=".xml">
-      <select name="assettype">
-        <option value="event">Event</option>
-        <option value="vfs">VFS</option>
-      </select>
-      <input type="submit" value="Upload">
-    </form>
-  </div>
+
+<div class="overlay">
+
+    <div class="hero">
+
+        <h1>🚀 Asset Cleanup Utility</h1>
+
+        <p>
+            Simplify Software AG Managed File Transfer XML cleanup,
+            migration and maintenance with just a few clicks.
+        </p>
+
+    </div>
+
+    <div class="cards">
+
+        <a href="{{ url_for('event_page') }}" class="card event">
+
+            <i class="fas fa-calendar-check"></i>
+
+            <h2>Event Cleanup</h2>
+
+            <p>
+                Clean Event XML assets, remove unwanted dependencies,
+                validate schedules and prepare migration-ready XML files.
+            </p>
+
+        </a>
+
+        <a href="{{ url_for('vfs_page') }}" class="card vfs">
+
+            <i class="fas fa-folder-tree"></i>
+
+            <h2>VFS Cleanup</h2>
+
+            <p>
+                Retain required VFS folders, remove unused users,
+                clean permissions and generate optimized XML files.
+            </p>
+
+        </a>
+
+    </div>
+
+    <div class="about">
+
+        <h3>About Developer</h3>
+
+        <p>
+            Developed by
+            <span class="highlight">Suraj Prakash Verma</span>.
+        </p>
+
+        <br>
+
+        <p>
+            Software Engineer at UST specializing in Software AG webMethods,
+            Managed File Transfer (MFT), MuleSoft, SAP S/4HANA Integrations,
+            Enterprise Middleware and Automation Solutions.
+        </p>
+
+    </div>
+
+    <div class="footer">
+        © 2026 Asset Cleanup Utility
+    </div>
+
+</div>
+
 </body>
 </html>
