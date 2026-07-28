@@ -14,19 +14,15 @@ def vfsCleanUp(input_file, vfs_paths):
         return tag
 
     def normalize_path(path):
-
         if not path:
             return ""
-
         return path.strip().rstrip("/")
 
     def compare_key(path):
-
         path = normalize_path(path)
         return path.lstrip("/")
 
     def split_vfs_path(path):
-
         path = normalize_path(path)
 
         parts = path.rsplit("/", 1)
@@ -56,6 +52,7 @@ def vfsCleanUp(input_file, vfs_paths):
             ]
 
         if isinstance(vfs_paths, str):
+
             vfs_paths = vfs_paths.replace("<br>", "\n")
             vfs_paths = vfs_paths.replace("<br/>", "\n")
             vfs_paths = vfs_paths.replace("<br />", "\n")
@@ -69,9 +66,11 @@ def vfsCleanUp(input_file, vfs_paths):
         return []
 
     def remove_elements_by_local_name(root_node, tag_name):
-       
 
-        elements = root_node.xpath(".//*[local-name()=$name]", name=tag_name)
+        elements = root_node.xpath(
+            ".//*[local-name()=$name]",
+            name=tag_name
+        )
 
         for elem in elements:
             parent = elem.getparent()
@@ -80,11 +79,13 @@ def vfsCleanUp(input_file, vfs_paths):
                 parent.remove(elem)
 
     def remove_empty_depends(root_node):
-        
 
-        depends_elements = root_node.xpath(".//*[local-name()='depends']")
+        depends_elements = root_node.xpath(
+            ".//*[local-name()='depends']"
+        )
 
         for depends in depends_elements:
+
             has_child = len(depends) > 0
             has_text = depends.text and depends.text.strip()
 
@@ -94,15 +95,39 @@ def vfsCleanUp(input_file, vfs_paths):
                 if parent is not None:
                     parent.remove(depends)
 
+    def keep_only_first_vfs_dependency(root_node):
+        """
+        Keeps only the first VFS entry under each depends block.
+        Removes all remaining VFS hierarchy entries.
+        """
+
+        depends_elements = root_node.xpath(
+            ".//*[local-name()='depends']"
+        )
+
+        for depends in depends_elements:
+
+            vfs_elements = [
+                child
+                for child in depends
+                if strip_ns(child.tag) == "VFS"
+            ]
+
+            # Keep first VFS only
+            for vfs in vfs_elements[1:]:
+                depends.remove(vfs)
+
     # Convert input paths
     vfs_paths_list = convert_input_to_list(vfs_paths)
 
     allowed_vfs = set()
 
     for path in vfs_paths_list:
+
         parent_path, vfs_name = split_vfs_path(path)
 
         if parent_path and vfs_name:
+
             allowed_vfs.add(
                 (
                     compare_key(parent_path),
@@ -110,15 +135,18 @@ def vfsCleanUp(input_file, vfs_paths):
                 )
             )
 
-    
+    # Keep only assetType name="VFS"
     for assetType in list(root):
+
         tag_name = strip_ns(assetType.tag)
         name_attr = assetType.get("name")
 
         if tag_name == "assetType" and name_attr != "VFS":
             root.remove(assetType)
 
+    # Filter VFS assets
     for assetType in list(root):
+
         tag_name = strip_ns(assetType.tag)
         name_attr = assetType.get("name")
 
@@ -126,36 +154,53 @@ def vfsCleanUp(input_file, vfs_paths):
             continue
 
         for asset in list(assetType):
+
             virtual_parent_path = ""
             vfs_name = ""
 
             for elem in asset.iter():
+
                 elem_tag = strip_ns(elem.tag)
 
                 if elem_tag == "virtualParentPath":
-                    virtual_parent_path = elem.text.strip() if elem.text else ""
+                    virtual_parent_path = (
+                        elem.text.strip()
+                        if elem.text else ""
+                    )
 
                 elif elem_tag == "VFSName":
-                    vfs_name = elem.text.strip() if elem.text else ""
+                    vfs_name = (
+                        elem.text.strip()
+                        if elem.text else ""
+                    )
 
-            virtual_parent_path_key = compare_key(virtual_parent_path)
+            virtual_parent_path_key = compare_key(
+                virtual_parent_path
+            )
+
             vfs_name_key = normalize_path(vfs_name)
 
-            if (virtual_parent_path_key, vfs_name_key) not in allowed_vfs:
+            if (
+                virtual_parent_path_key,
+                vfs_name_key
+            ) not in allowed_vfs:
+
                 assetType.remove(asset)
 
         if len(assetType) == 0:
             root.remove(assetType)
 
+    # Remove unwanted nodes
     remove_elements_by_local_name(root, "users")
-
     remove_elements_by_local_name(root, "userId")
     remove_elements_by_local_name(root, "userTemplate")
     remove_elements_by_local_name(root, "certificate")
-
-    
     remove_elements_by_local_name(root, "user")
 
+    # Keep only first VFS dependency
+    keep_only_first_vfs_dependency(root)
+
+    # Remove empty depends blocks
     remove_empty_depends(root)
 
     return tree
