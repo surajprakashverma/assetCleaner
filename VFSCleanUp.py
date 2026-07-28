@@ -85,6 +85,9 @@ def vfsCleanUp(input_file, vfs_paths):
                     parent.remove(depends)
 
     def keep_only_first_vfs_dependency(root_node):
+        """
+        Keep only the first VFS inside each depends block.
+        """
 
         depends_elements = root_node.xpath(
             ".//*[local-name()='depends']"
@@ -102,8 +105,18 @@ def vfsCleanUp(input_file, vfs_paths):
                 depends.remove(vfs)
 
     def cleanup_user_elements(root_node):
+        """
+        Remove:
+            <users>...</users>
+            <user id="..." name="..."/>
 
-        # Remove all <users>...</users> blocks
+        Keep:
+            <user/>
+            <user></user>
+            <user>ppsagnfm</user>
+        """
+
+        # Remove all <users> blocks
         users_blocks = root_node.xpath(
             ".//*[local-name()='users']"
         )
@@ -114,40 +127,22 @@ def vfsCleanUp(input_file, vfs_paths):
             if parent is not None:
                 parent.remove(users)
 
-        # Process all <user> tags
+        # Remove only attribute-based user tags
         user_elements = root_node.xpath(
             ".//*[local-name()='user']"
         )
 
         for user in user_elements:
 
-            has_attributes = len(user.attrib) > 0
-            has_text = (
-                user.text is not None and
-                user.text.strip()
-            )
-
-            # Remove:
-            # <user id="..." name="..."/>
-            if has_attributes:
+            if len(user.attrib) > 0:
                 parent = user.getparent()
 
                 if parent is not None:
                     parent.remove(user)
 
-            # Remove empty user tags
-            elif not has_text:
-                parent = user.getparent()
-
-                if parent is not None:
-                    parent.remove(user)
-
-            # Keep:
-            # <user>ppsagnfm</user>
-
-    # --------------------------------------
+    # ------------------------------------------
     # Convert input paths
-    # --------------------------------------
+    # ------------------------------------------
 
     vfs_paths_list = convert_input_to_list(vfs_paths)
 
@@ -166,9 +161,9 @@ def vfsCleanUp(input_file, vfs_paths):
                 )
             )
 
-    # --------------------------------------
+    # ------------------------------------------
     # Keep only assetType="VFS"
-    # --------------------------------------
+    # ------------------------------------------
 
     for assetType in list(root):
 
@@ -178,9 +173,9 @@ def vfsCleanUp(input_file, vfs_paths):
         if tag_name == "assetType" and name_attr != "VFS":
             root.remove(assetType)
 
-    # --------------------------------------
+    # ------------------------------------------
     # Filter VFS assets
-    # --------------------------------------
+    # ------------------------------------------
 
     for assetType in list(root):
 
@@ -221,9 +216,9 @@ def vfsCleanUp(input_file, vfs_paths):
         if len(assetType) == 0:
             root.remove(assetType)
 
-    # --------------------------------------
-    # Remove unwanted nodes
-    # --------------------------------------
+    # ------------------------------------------
+    # Cleanup unwanted elements
+    # ------------------------------------------
 
     cleanup_user_elements(root)
 
@@ -231,10 +226,10 @@ def vfsCleanUp(input_file, vfs_paths):
     remove_elements_by_local_name(root, "userTemplate")
     remove_elements_by_local_name(root, "certificate")
 
-    # Keep only first VFS inside depends
+    # Keep only first VFS dependency
     keep_only_first_vfs_dependency(root)
 
-    # Remove empty depends
+    # Remove empty depends blocks
     remove_empty_depends(root)
 
     return tree
