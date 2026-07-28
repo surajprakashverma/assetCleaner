@@ -150,6 +150,7 @@ def vfsCleanUp(input_file, vfs_paths):
     remove_elements_by_local_name(root, "users")
 
     remove_elements_by_local_name(root, "userId")
+    remove_elements_by_local_name(root, "userTemplate")
 
     
     remove_elements_by_local_name(root, "user")
